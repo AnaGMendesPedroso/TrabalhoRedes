@@ -34,8 +34,7 @@ public class InicioCliente {
                     System.out.println("Caminho: ");
                     caminho = t.next();
                     //GerenciadorDiretorios.criarDiretorio(caminho);
-                    caminho = "1#"+caminho;
-                    System.out.println("PASSOU AQUI" + caminho);
+                    caminho = "1#"+caminho+"#";
                     udpCliente.criarDiretorio(caminho);
                     menu();
                     break;
@@ -44,8 +43,8 @@ public class InicioCliente {
                     System.out.println("Bora remover uns diretórios ae então!");
                     System.out.println("Manda o caminho do diretório que você quer apagar ae meu consagrado! ");
                     System.out.println("Caminho: ");
-                    caminho = t.next();
-                   // GerenciadorDiretorios.removerDiretorio(caminho);
+                    caminho = "2#"+caminho+"#";
+                    //chama o udp client aqui passando essa caminho
                     menu();
                     break;
 
@@ -53,21 +52,23 @@ public class InicioCliente {
                         System.out.println("Bora dar uns bisu nuns arquivos ae então");
                         System.out.println("Manda o caminho do diretório que você quer listar ae meu consagrado! ");
                         System.out.println("Caminho: ");
-                        caminho = t.next();
-                  //  GerenciadorDiretorios.listarConteudoDiretorio(caminho);
+                        caminho = "3#"+caminho+"#";
+                        //chama o udp client aqui passando essa caminho
                     menu();
                     break;
 
                 case 4:
                     System.out.println("Beleza! Bora enviar um arquivão :)");
+                    caminho = "4#"+caminho+"#";
+                    //chama o udp client aqui passando essa caminho
                     break;
 
                 case 5:
                     System.out.println("Removendo arquivo em 3..2..1..");
                     System.out.println("Manda o caminho do arquivo que você quer apagar ae meu consagrado! ");
                     System.out.println("Caminho: ");
-                    caminho = t.next();
-                   // GerenciadorDiretorios.removerArquivo(caminho);
+                    caminho = "5#"+caminho+"#";
+                    //chama o udp client aqui passando essa caminho
                     break;
 
                 case 6:
@@ -75,7 +76,7 @@ public class InicioCliente {
                     break;
             }
         }catch(InputMismatchException e) {
-                    System.err.println("Ixi cara deu ruim nessa sua entrada sua ae :( \nTenta de novo que eu deixo :)");
+                    System.err.println("Ixi cara deu ruim nessa sua entrada ae :( \nTenta de novo que eu deixo :)");
             System.out.print("Aperte \"Enter\" para continuar.");
             t.nextLine();
             t.nextLine().matches("\n");
