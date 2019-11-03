@@ -12,11 +12,11 @@ public class GerenciadorDiretorios {
         else return "Deu ruim ao tentar criar o diretório "+caminho;
     }
 
-    public  void removerDiretorio(String caminho) {
+    public  String removerDiretorio(String caminho) {
         File  sistemaDeArquivos = new File(caminho);
         boolean deu =  sistemaDeArquivos.delete();
-        if (deu) System.out.println("Diretorio removido");
-        else System.out.println("Deu ruim  na remoção...");
+        if (deu) return "Diretorio removido no caminho "+caminho;
+        else return "Deu ruim ao tentar remover o diretório "+caminho;
     }
 
     public  void listarConteudoDiretorio(String caminho) {
@@ -25,8 +25,5 @@ public class GerenciadorDiretorios {
         for (String s: resultado ) {
             System.out.println(s);
         }
-    }
-
-    public static void removerArquivo(String caminho) {
     }
 }

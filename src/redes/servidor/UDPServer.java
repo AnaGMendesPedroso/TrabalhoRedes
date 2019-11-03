@@ -20,12 +20,18 @@ public class UDPServer {
                 String[] acaoConteudo2 =  acaoConteudo.split("#");
                 System.out.println("Servidor recebeu  a ação: " + acaoConteudo2[0].toUpperCase());
                 System.out.println("Servidor recebeu  o conteúdo : " + acaoConteudo2[1].toUpperCase());
-
+                String result = "";
                 if (acaoConteudo2[0].equalsIgnoreCase("1")) {
-                    String result = gerenciadorDiretorios.criarDiretorio( acaoConteudo2[1]);
-                    DatagramPacket reply = new DatagramPacket(result.getBytes(), result.length(), request.getAddress(), request.getPort());
-                    aSocket.send(reply);
+                  result = gerenciadorDiretorios.criarDiretorio( acaoConteudo2[1]);
+                } else if(acaoConteudo2[0].equalsIgnoreCase("2") || acaoConteudo2[0].equalsIgnoreCase("5") ){
+                    result = gerenciadorDiretorios.removerDiretorio(acaoConteudo2[1]);
+                }else if(acaoConteudo2[0].equalsIgnoreCase("3")){
+                    gerenciadorDiretorios.listarConteudoDiretorio(acaoConteudo2[1]);
+                }else if(acaoConteudo2[0].equalsIgnoreCase("4")){
+
                 }
+                DatagramPacket reply = new DatagramPacket(result.getBytes(), result.length(), request.getAddress(), request.getPort());
+                aSocket.send(reply);
             }
         } catch (SocketException e) {
             System.out.println("Socket: " + e.getMessage());

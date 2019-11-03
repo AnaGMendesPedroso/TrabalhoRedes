@@ -21,7 +21,6 @@ public class UDPClient{
     }
 
     public void criarDiretorio(String caminho){
-        System.out.println("CAMINHO CLIENT: " + caminho);
         byte [] m = caminho.getBytes();
         try {
             DatagramPacket request = new DatagramPacket(m, m.length, aHost, serverPort);
