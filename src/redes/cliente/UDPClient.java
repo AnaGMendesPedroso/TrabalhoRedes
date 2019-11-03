@@ -4,22 +4,15 @@ import java.net.*;
 import java.io.*;
 
 public class UDPClient{
-    public static void main(String args[]){
-    // args give message contents and server hostname
-        DatagramSocket aSocket = null;
+    private DatagramSocket aSocket;
+    private InetAddress aHost;
+    private int serverPort;
+
+    UDPClient(String host){
         try {
             aSocket = new DatagramSocket();
-            byte [] m = getBytes(new File(args[0]));
-            String[] qualquer = args[0].split("[.]");
-            System.out.println(qualquer[1]);
-            InetAddress aHost = InetAddress.getByName(args[1]);
-            int serverPort = 6789;
-            DatagramPacket request = new DatagramPacket(m, m.length, aHost, serverPort);
-            aSocket.send(request);
-            byte[] buffer = new byte[5000];
-            DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
-            aSocket.receive(reply);
-            System.out.println("Reply: " + new String(reply.getData()));
+            aHost = InetAddress.getByName(host);
+            serverPort = 6789;
         }catch (SocketException e){
             System.out.println("Socket: " + e.getMessage());
         }catch (IOException e){
@@ -28,8 +21,28 @@ public class UDPClient{
         finally {
             if(aSocket != null) aSocket.close();
         }
-
     }
+
+    public void criarDiretorio(String caminho){
+        byte [] m = getBytes(new File(caminho));
+        try {
+            DatagramPacket request = new DatagramPacket(m, m.length, aHost, serverPort);
+            aSocket.send(request);
+            retorno();
+        }catch (SocketException e){
+            System.out.println("Socket: " + e.getMessage());
+        }catch (IOException e){
+            System.out.println("IO: " + e.getMessage());
+        }
+    }
+
+    private void retorno() throws IOException {
+        byte[] buffer = new byte[5000];
+        DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
+        aSocket.receive(reply);
+        System.out.println("Reply: " + new String(reply.getData()));
+    }
+
     public static byte[] getBytes(File file) {
         int len = (int)file.length();
         byte[] sendBuf = new byte[len];
@@ -45,7 +58,9 @@ public class UDPClient{
         }
         return sendBuf;
     }
-    public void criarDiretorio(String caminho){
 
+    public void transferirArquivo(String dado){
+        String[] qualquer = dado.split("[.]");
+        System.out.println(qualquer[1]);
     }
 }
