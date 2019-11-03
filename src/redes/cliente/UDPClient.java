@@ -18,12 +18,10 @@ public class UDPClient{
         }catch (IOException e){
             System.out.println("IO: " + e.getMessage());
         }
-        finally {
-            if(aSocket != null) aSocket.close();
-        }
     }
 
     public void criarDiretorio(String caminho){
+        System.out.println("CAMINHO CLIENT: " + caminho);
         byte [] m = getBytes(new File(caminho));
         try {
             DatagramPacket request = new DatagramPacket(m, m.length, aHost, serverPort);
@@ -33,6 +31,8 @@ public class UDPClient{
             System.out.println("Socket: " + e.getMessage());
         }catch (IOException e){
             System.out.println("IO: " + e.getMessage());
+        } finally {
+            if(aSocket != null) aSocket.close();
         }
     }
 

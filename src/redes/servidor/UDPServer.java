@@ -14,13 +14,15 @@ public class UDPServer {
             byte[] buffer = new byte[5000];
             while (true) {
                 DatagramPacket request = new DatagramPacket(buffer, buffer.length);
-                String[] acaoConteudo = new String(request.getData()).split("#");
-                System.out.println("Servidou recebeu o pacotão com a ação: " + acaoConteudo[0]);
-                System.out.println("Servidou recebeu o pacotinho com o conteúdo : " + acaoConteudo[1]);
                 aSocket.receive(request);
+                String acaoConteudo = new String(request.getData());
+                System.out.println("RECEBIDO PELO SERVIDOR:"+acaoConteudo);
+                String[] acaoConteudo2 =  acaoConteudo.split("#");
+                System.out.println("Servidor recebeu  a ação: " + acaoConteudo2[0].toUpperCase());
+                System.out.println("Servidor recebeu  o conteúdo : " + acaoConteudo2[1].toUpperCase());
 
-                if (acaoConteudo[0].equalsIgnoreCase("1")) {
-                    String result = gerenciadorDiretorios.criarDiretorio( acaoConteudo[1]);
+                if (acaoConteudo2[0].equalsIgnoreCase("1")) {
+                    String result = gerenciadorDiretorios.criarDiretorio( acaoConteudo2[1]);
                     DatagramPacket reply = new DatagramPacket(result.getBytes(), result.length(), request.getAddress(), request.getPort());
                     aSocket.send(reply);
                 }

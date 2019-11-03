@@ -34,8 +34,9 @@ public class InicioCliente {
                     System.out.println("Caminho: ");
                     caminho = t.next();
                     //GerenciadorDiretorios.criarDiretorio(caminho);
-                    udpCliente.criarDiretorio("1"+caminho);
-                    System.out.println("PASSOU AQUI");
+                    caminho = "1#"+caminho;
+                    System.out.println("PASSOU AQUI" + caminho);
+                    udpCliente.criarDiretorio(caminho);
                     menu();
                     break;
 
@@ -44,7 +45,7 @@ public class InicioCliente {
                     System.out.println("Manda o caminho do diretório que você quer apagar ae meu consagrado! ");
                     System.out.println("Caminho: ");
                     caminho = t.next();
-                    GerenciadorDiretorios.removerDiretorio(caminho);
+                   // GerenciadorDiretorios.removerDiretorio(caminho);
                     menu();
                     break;
 
@@ -53,7 +54,7 @@ public class InicioCliente {
                         System.out.println("Manda o caminho do diretório que você quer listar ae meu consagrado! ");
                         System.out.println("Caminho: ");
                         caminho = t.next();
-                    GerenciadorDiretorios.listarConteudoDiretorio(caminho);
+                  //  GerenciadorDiretorios.listarConteudoDiretorio(caminho);
                     menu();
                     break;
 
@@ -66,7 +67,7 @@ public class InicioCliente {
                     System.out.println("Manda o caminho do arquivo que você quer apagar ae meu consagrado! ");
                     System.out.println("Caminho: ");
                     caminho = t.next();
-                    GerenciadorDiretorios.removerArquivo(caminho);
+                   // GerenciadorDiretorios.removerArquivo(caminho);
                     break;
 
                 case 6:
