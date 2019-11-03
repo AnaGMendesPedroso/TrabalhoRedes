@@ -1,4 +1,4 @@
-package redes;
+package redes.servidor;
 
 import java.io.File;
 

@@ -1,9 +1,11 @@
-package redes;
+package redes.cliente;
+
+import redes.servidor.GerenciadorDiretorios;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Main {
+public class InicioCliente {
 
     public static void main(String[] args) {
         System.out.println("||-------------------------------------------------------------------- ||");
