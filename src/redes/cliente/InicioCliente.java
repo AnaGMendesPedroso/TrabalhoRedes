@@ -2,11 +2,12 @@ package redes.cliente;
 
 import redes.servidor.GerenciadorDiretorios;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InicioCliente {
-    UDPClient udpCliente = new UDPClient();
+    private static UDPClient udpCliente = new UDPClient("127.0.0.1");
 
     public static void main(String[] args) {
         System.out.println("||-------------------------------------------------------------------- ||");
@@ -33,7 +34,8 @@ public class InicioCliente {
                     System.out.println("Caminho: ");
                     caminho = t.next();
                     //GerenciadorDiretorios.criarDiretorio(caminho);
-                    udpCliente.criarDiretorio(caminho);
+                    udpCliente.criarDiretorio("1"+caminho);
+                    System.out.println("PASSOU AQUI");
                     menu();
                     break;
 
