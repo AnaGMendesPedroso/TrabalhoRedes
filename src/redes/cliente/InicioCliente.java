@@ -6,6 +6,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InicioCliente {
+    UDPClient udpCliente = new UDPClient();
 
     public static void main(String[] args) {
         System.out.println("||-------------------------------------------------------------------- ||");
@@ -31,7 +32,8 @@ public class InicioCliente {
                     System.out.println("OK! Vamos criar um diretório!");
                     System.out.println("Caminho: ");
                     caminho = t.next();
-                    GerenciadorDiretorios.criarDiretorio(caminho);
+                    //GerenciadorDiretorios.criarDiretorio(caminho);
+                    udpCliente.criarDiretorio(caminho);
                     menu();
                     break;
 
