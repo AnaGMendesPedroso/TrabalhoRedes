@@ -3,29 +3,28 @@ package redes.cliente;
 import java.net.*;
 import java.io.*;
 
-public class UDPClient{
+class UDPClient{
     private DatagramSocket aSocket;
     private InetAddress aHost;
     private int serverPort;
 
-    UDPClient(String host){
+    UDPClient(){
         try {
-            aSocket = new DatagramSocket();
-            aHost = InetAddress.getByName(host);
+            aHost = InetAddress.getByName("127.0.0.1");
             serverPort = 6789;
-        }catch (SocketException e){
-            System.out.println("Socket: " + e.getMessage());
         }catch (IOException e){
             System.out.println("IO: " + e.getMessage());
         }
     }
-
-    public void criarDiretorio(String caminho){
-        byte [] m = caminho.getBytes();
+    private void comunicaServidor(byte[] m){
         try {
+            aSocket = new DatagramSocket();
             DatagramPacket request = new DatagramPacket(m, m.length, aHost, serverPort);
             aSocket.send(request);
-            retorno();
+            byte[] buffer = new byte[5000];
+            DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
+            aSocket.receive(reply);
+            System.out.println("Reply: " + new String(reply.getData()));
         }catch (SocketException e){
             System.out.println("Socket: " + e.getMessage());
         }catch (IOException e){
@@ -35,14 +34,29 @@ public class UDPClient{
         }
     }
 
-    private void retorno() throws IOException {
-        byte[] buffer = new byte[5000];
-        DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
-        aSocket.receive(reply);
-        System.out.println("Reply: " + new String(reply.getData()));
+    void gerUDPClient(String action){
+        int opcao = Integer.parseInt(action.charAt(0)+"");
+        if(opcao == 1 || opcao == 2 || opcao == 5){
+            comunicaServidor(action.getBytes());
+        } else if (opcao == 4) {
+            String []caminho = action.split("#");
+            String aux = action.charAt(0)+"#";
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            try {
+                outputStream.write(aux.getBytes());
+                outputStream.write(getBytes(new File(caminho[1])));
+                caminho[1] = "#"+caminho[1];
+                outputStream.write(caminho[1].getBytes());
+            } catch (IOException e) {
+                System.out.println("");
+            }
+            comunicaServidor(outputStream.toByteArray());
+        }
+
     }
 
-    public static byte[] getBytes(File file) {
+    private static byte[] getBytes(File file) {
         int len = (int)file.length();
         byte[] sendBuf = new byte[len];
         FileInputStream inFile  = null;
@@ -51,15 +65,10 @@ public class UDPClient{
             inFile.read(sendBuf, 0, len);
 
         } catch (FileNotFoundException fnfex) {
-
+            System.out.println(fnfex);
         } catch (IOException ioex) {
-
+            System.out.println(ioex);
         }
         return sendBuf;
-    }
-
-    public void transferirArquivo(String dado){
-        String[] qualquer = dado.split("[.]");
-        System.out.println(qualquer[1]);
     }
 }
