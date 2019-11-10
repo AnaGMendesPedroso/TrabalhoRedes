@@ -1,55 +1,72 @@
 package redes.servidor;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+
+import java.io.*;
+import java.util.Objects;
 
 public class GerenciadorDiretorios {
-
-    GerenciadorDiretorios(){}
-    String criarDiretorio(String caminho) {
-        File  sistemaDeArquivos = new File(caminho);
+    private final File arquivoServidor;
+    public GerenciadorDiretorios(){
+       this.arquivoServidor = new File("arquivoServidor");
+       arquivoServidor.mkdir();
+    }
+    public String criarDiretorio(String nomeNovoDiretorio) {
+        File sistemaDeArquivos = new File(arquivoServidor.getAbsolutePath() + "/"+nomeNovoDiretorio);
         boolean deu = sistemaDeArquivos.mkdir();
-        if (deu) return "Diretorio criado no caminho "+caminho;
-        else return "Deu ruim ao tentar criar o diretório "+caminho;
+        if (deu) return "Diretorio criado no caminho "+sistemaDeArquivos.getAbsolutePath();
+        else return "Deu ruim ao tentar criar o diretório "+nomeNovoDiretorio;
+    }
+    public String removerArquivo(String caminhoArquivo) {
+        File  sistemaDeArquivos = new File(arquivoServidor.getAbsolutePath() +"/"+ caminhoArquivo);
+        if(sistemaDeArquivos.exists()){
+            sistemaDeArquivos.delete();
+            return "Arquivo "+sistemaDeArquivos.getAbsolutePath()+" removido!";
+        }
+        else return "Caminho inválido";
     }
 
-    String removerDiretorio(String caminho) {
-        File  sistemaDeArquivos = new File(caminho);
+    public String removerDiretorio(String nomeDiretorio) {
+        File  sistemaDeArquivos = new File(arquivoServidor.getAbsolutePath() +"/"+ nomeDiretorio);
+
+        //Remove um diretório não vazio
+        if(sistemaDeArquivos.list().length > 0){
+            for (File arquivoNoDiretorio : sistemaDeArquivos.listFiles()) {
+                arquivoNoDiretorio.delete();
+            }
+        }
         boolean deu =  sistemaDeArquivos.delete();
-        if (deu) return "Diretorio removido no caminho "+caminho;
-        else return "Deu ruim ao tentar remover o diretório "+caminho;
+        if (deu) return "Diretório "+sistemaDeArquivos.getAbsolutePath()+" removido!";
+        else return "Deu ruim ao tentar remover o diretório";
     }
 
-    void listarConteudoDiretorio(String caminho) {
-        File sistemaArquivos = new File(caminho);
-        String [] resultado = sistemaArquivos.list();
-        for (String s: resultado ) {
-            System.out.println(s);
+    public String listarConteudoDiretorio(String caminho) {
+        File sistemaArquivos = new File(arquivoServidor.getAbsolutePath() + "/"+caminho);
+        String[] conteudo = sistemaArquivos.list();
+        String returnFinal = "";
+        for (String nome : conteudo ) {
+            returnFinal = "\n"+nome+"\n"+returnFinal;
+        }
+        return returnFinal;
+    }
+
+    public String salvarConteudoDiretorio(String nameFile, InputStream clientInput ) throws IOException {
+        byte[] buffer = new byte[1048576];
+
+        FileOutputStream fos = new FileOutputStream(arquivoServidor.getAbsolutePath()+"/"+nameFile);
+        ObjectInputStream objectInputStream = new ObjectInputStream(clientInput);
+
+        while (true) {
+
+            int bytesRead = objectInputStream.read(buffer);
+            if (bytesRead == -1) break;
+            fos.write(buffer, 0, bytesRead);
+        }
+        fos.flush();
+        objectInputStream.close();
+
+
+        System.out.println("Arquivo "+nameFile);
+            return "Arquivo enviado com sucesso!";
+
         }
     }
-
-    void salvarConteudoDiretorio(String caminho, String conteudo, int tamanho) {
-        byte[] bytes = conteudo.getBytes();
-        String[] nome = caminho.split("/");
-        System.out.println("CAMINHO "+nome[nome.length-1]);
-        File f = new File(nome[nome.length-1]);
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(f);
-            fos.write(bytes);
-        } catch (FileNotFoundException e){
-
-        } catch (IOException e){
-
-        } finally {
-            if (fos != null)
-                try {
-                    fos.close();
-                } catch (IOException ex) {
-
-                }
-        }
-    }
-}
