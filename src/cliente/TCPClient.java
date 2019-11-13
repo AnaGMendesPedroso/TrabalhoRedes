@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.nio.file.Files;
 
 public class TCPClient {
 
@@ -18,7 +19,11 @@ public class TCPClient {
 
         try {
             if(opcao == 4){
-                protocolo.setArquivo(new File(endereco));
+                File f = new File(endereco);
+                protocolo.setNomeArquivo(f.getName());
+                byte[] fileContent = Files.readAllBytes(f.toPath());
+
+                protocolo.setArquivo(fileContent);
                 protocolo.setEndereco2(destino);
             }
             protocolo = StartTCPClient(protocolo, host);

@@ -5,11 +5,12 @@ import java.io.Serializable;
 
 public class Protocolo implements Serializable {
     private int operacao;
-    private File arquivo;
+    private byte[] arquivo;
     private String endereco1;
     private String endereco2;
     private String[] lista;
     private String mensagem;
+    private String nomeArquivo;
 
     public Protocolo(int operacao, String endereco1){
         this.operacao = operacao;
@@ -24,11 +25,11 @@ public class Protocolo implements Serializable {
         this.operacao = operacao;
     }
 
-    public File getArquivo() {
+    public byte[] getArquivo() {
         return arquivo;
     }
 
-    public void setArquivo(File arquivo) {
+    public void setArquivo(byte[] arquivo) {
         this.arquivo = arquivo;
     }
 
@@ -62,5 +63,13 @@ public class Protocolo implements Serializable {
 
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
+    }
+
+    public String getNomeArquivo() {
+        return nomeArquivo;
+    }
+
+    public void setNomeArquivo(String nomeArquivo) {
+        this.nomeArquivo = nomeArquivo;
     }
 }

@@ -26,7 +26,7 @@ public class GerenciadorDiretorios {
                 protocolo.setLista(listarConteudoDiretorio(protocolo.getEndereco1()));
                 break;
             case 4:
-                protocolo.setMensagem(salvarConteudoDiretorio(protocolo.getArquivo(), protocolo.getEndereco2()));
+                protocolo.setMensagem(salvarConteudoDiretorio(protocolo));
                 break;
             case 5:
                 protocolo.setMensagem(removerArquivo(protocolo.getEndereco1()));
@@ -71,15 +71,21 @@ public class GerenciadorDiretorios {
         return (new File(arquivoServidor.getAbsolutePath() + "/"+caminho)).list();
     }
 
-    private String salvarConteudoDiretorio(File arquivo, String destino) throws IOException {
-        FileInputStream arquivoInput = new FileInputStream(arquivo);
-        FileOutputStream outputStream = new FileOutputStream(arquivoServidor.getAbsolutePath()+"/"+destino+"/"+arquivo.getName());
+    private String salvarConteudoDiretorio(Protocolo protocolo) throws IOException {
+        /*InputStream arquivoInput = new InputStream(protocolo.getArquivo()));
+        FileOutputStream outputStream = new FileOutputStream(arquivoServidor.getAbsolutePath()+"/"+protocolo.getEndereco2()+"/"+protocolo.getNomeArquivo());
         int size = 0;
         while ((size = arquivoInput.read()) != -1) {
             outputStream.write(size);
         }
         arquivoInput.close();
         outputStream.close();
+        return "Arquivo enviado com sucesso!";*/
+        java.io.File file = new java.io.File(arquivoServidor.getAbsolutePath()+"/"+protocolo.getEndereco2()+"/"+protocolo.getNomeArquivo());
+        FileOutputStream in = new FileOutputStream(file) ;
+        in.write(protocolo.getArquivo());
+        in.close();
+
         return "Arquivo enviado com sucesso!";
     }
 }
