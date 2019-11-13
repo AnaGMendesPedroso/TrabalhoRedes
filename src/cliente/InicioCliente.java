@@ -35,13 +35,10 @@ public class InicioCliente {
             try {
                 switch (opcoes) {
                     case 1:
-
                         System.out.println("Nome do novo diretório: ");
                         caminho = t.next();
                         System.out.println((client.CriaPedido(1, caminho, hostname)).getMensagem());
                         break;
-                        //172.28.0.1
-                        // /home/anapedroso/Documents/Redes/EmpresaDepois.txt
                     case 2:
                         System.out.println("Nome do diretório que deseja apagar: ");
                         caminho = t.next();
@@ -76,7 +73,7 @@ public class InicioCliente {
                         break;
                 }
             }catch(InputMismatchException e) {
-                        System.err.println("Ixi cara deu ruim nessa sua entrada ae :( \nTenta de novo que eu deixo :)");
+                System.err.println("Ixi cara deu ruim nessa sua entrada ae :( \nTenta de novo que eu deixo :)");
                 System.out.print("Aperte \"Enter\" para continuar.");
                 t.nextLine();
                 t.nextLine().matches("\n");

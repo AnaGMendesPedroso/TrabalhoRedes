@@ -1,9 +1,6 @@
 package protocolo;
 
-import java.io.File;
-import java.io.Serializable;
-
-public class Protocolo implements Serializable {
+public class Protocolo implements java.io.Serializable {
     private int operacao;
     private byte[] arquivo;
     private String endereco1;
@@ -21,10 +18,6 @@ public class Protocolo implements Serializable {
         return operacao;
     }
 
-    public void setOperacao(int operacao) {
-        this.operacao = operacao;
-    }
-
     public byte[] getArquivo() {
         return arquivo;
     }
@@ -35,10 +28,6 @@ public class Protocolo implements Serializable {
 
     public String getEndereco1() {
         return endereco1;
-    }
-
-    public void setEndereco1(String endereco1) {
-        this.endereco1 = endereco1;
     }
 
     public String getEndereco2() {

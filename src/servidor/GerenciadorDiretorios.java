@@ -2,7 +2,9 @@ package servidor;
 
 import protocolo.Protocolo;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class GerenciadorDiretorios {
     private final File arquivoServidor;
@@ -14,7 +16,7 @@ public class GerenciadorDiretorios {
         this.arquivoServidor.mkdir();
     }
 
-    public Protocolo init() throws IOException {
+    Protocolo init() {
         switch (protocolo.getOperacao()){
             case 1:
                 protocolo.setMensagem(criarDiretorio(protocolo.getEndereco1()));
@@ -26,7 +28,7 @@ public class GerenciadorDiretorios {
                 protocolo.setLista(listarConteudoDiretorio(protocolo.getEndereco1()));
                 break;
             case 4:
-                protocolo.setMensagem(salvarConteudoDiretorio(protocolo));
+                protocolo.setMensagem(salvarConteudoDiretorio(protocolo.getArquivo(), protocolo.getEndereco2(),protocolo.getNomeArquivo()));
                 break;
             case 5:
                 protocolo.setMensagem(removerArquivo(protocolo.getEndereco1()));
@@ -40,12 +42,12 @@ public class GerenciadorDiretorios {
     private String criarDiretorio(String nomeNovoDiretorio) {
         File file = new File(arquivoServidor.getAbsolutePath() + "/"+nomeNovoDiretorio);
         return ((file).mkdir())
-                ? "Diretorio criado no caminho "+file.getAbsolutePath()
-                : "Deu ruim ao tentar criar o diretório "+nomeNovoDiretorio;
+            ? "Diretorio criado no caminho "+file.getAbsolutePath()
+            : "Deu ruim ao tentar criar o diretório "+nomeNovoDiretorio;
     }
 
     private String removerArquivo(String caminhoArquivo) {
-        File  sistemaDeArquivos = new File(arquivoServidor.getAbsolutePath() +"/"+ caminhoArquivo);
+        File sistemaDeArquivos = new File(arquivoServidor.getAbsolutePath() +"/"+ caminhoArquivo);
         if(sistemaDeArquivos.exists()){
             sistemaDeArquivos.delete();
             return "Arquivo "+sistemaDeArquivos.getAbsolutePath()+" removido!";
@@ -54,7 +56,7 @@ public class GerenciadorDiretorios {
     }
 
     private String removerDiretorio(String nomeDiretorio) {
-        File  sistemaDeArquivos = new File(arquivoServidor.getAbsolutePath() +"/"+ nomeDiretorio);
+        File sistemaDeArquivos = new File(arquivoServidor.getAbsolutePath() +"/"+ nomeDiretorio);
 
         //Remove um diretório não vazio
         if(sistemaDeArquivos.list().length > 0){
@@ -71,21 +73,14 @@ public class GerenciadorDiretorios {
         return (new File(arquivoServidor.getAbsolutePath() + "/"+caminho)).list();
     }
 
-    private String salvarConteudoDiretorio(Protocolo protocolo) throws IOException {
-        /*InputStream arquivoInput = new InputStream(protocolo.getArquivo()));
-        FileOutputStream outputStream = new FileOutputStream(arquivoServidor.getAbsolutePath()+"/"+protocolo.getEndereco2()+"/"+protocolo.getNomeArquivo());
-        int size = 0;
-        while ((size = arquivoInput.read()) != -1) {
-            outputStream.write(size);
+    private String salvarConteudoDiretorio(byte[] Arquivo, String enderecoDestino, String nomeDoArquivo) {
+        try {
+            new FileOutputStream(
+                    new File(arquivoServidor.getAbsolutePath() + "/" + enderecoDestino + "/" + nomeDoArquivo)
+            ).write(Arquivo);
+        } catch (IOException e) {
+            return "Ouve um erro na persistencia do arquivo";
         }
-        arquivoInput.close();
-        outputStream.close();
-        return "Arquivo enviado com sucesso!";*/
-        java.io.File file = new java.io.File(arquivoServidor.getAbsolutePath()+"/"+protocolo.getEndereco2()+"/"+protocolo.getNomeArquivo());
-        FileOutputStream in = new FileOutputStream(file) ;
-        in.write(protocolo.getArquivo());
-        in.close();
-
         return "Arquivo enviado com sucesso!";
     }
 }

@@ -19,11 +19,9 @@ public class TCPClient {
 
         try {
             if(opcao == 4){
-                File f = new File(endereco);
-                protocolo.setNomeArquivo(f.getName());
-                byte[] fileContent = Files.readAllBytes(f.toPath());
-
-                protocolo.setArquivo(fileContent);
+                File file = new File(endereco);
+                protocolo.setNomeArquivo(file.getName());
+                protocolo.setArquivo(Files.readAllBytes(file.toPath()));
                 protocolo.setEndereco2(destino);
             }
             protocolo = StartTCPClient(protocolo, host);
