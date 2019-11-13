@@ -1,10 +1,14 @@
-package redes.cliente;
+package cliente;
+
+import protocolo.Protocolo;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InicioCliente {
+    public static TCPClient client;
     public static void main(String[] args) {
+        client = new TCPClient();
         System.out.println("||\t--------------------------------------------------------\t-||");
         System.out.println("||\tFaculdade de Computação\t-||||");
         System.out.println("||\tTrabalho Prático Redes de Computadores\t-||");
@@ -34,37 +38,37 @@ public class InicioCliente {
 
                         System.out.println("Nome do novo diretório: ");
                         caminho = t.next();
-                        caminho = "1#"+caminho+"#";
-                        System.out.println(TCPClient.iniciaComunicacao(caminho,hostname));
+                        System.out.println((client.CriaPedido(1, caminho, hostname)).getMensagem());
                         break;
                         //172.28.0.1
                         // /home/anapedroso/Documents/Redes/EmpresaDepois.txt
                     case 2:
                         System.out.println("Nome do diretório que deseja apagar: ");
                         caminho = t.next();
-                        caminho = "2#"+caminho+"#";
-                        System.out.println(TCPClient.iniciaComunicacao(caminho,hostname));
+                        System.out.println((client.CriaPedido(2, caminho, hostname)).getMensagem());
                         break;
 
                     case 3:
                         System.out.println("Nome do diretório que deseja listar o conteúdo: ") ;
                         caminho = t.next();
-                        caminho = "3#"+caminho+"#";
-                        System.out.println(TCPClient.iniciaComunicacao(caminho,hostname));
+                        Protocolo protocolo = client.CriaPedido(3, caminho, hostname);
+                        System.out.println(protocolo.getMensagem());
+                        for (String i : protocolo.getLista())
+                            System.out.println(i);
                         break;
 
                     case 4:
                         System.out.println("Caminho do arquivo em sua máquina que deseja enviar:");
                         caminho = t.next();
-                        caminho = "4#"+caminho+"#";
-                        System.out.println(TCPClient.iniciaComunicacao(caminho,hostname));
+                        System.out.println("Qual o destino no servido?");
+                        String destino = t.next();
+                        System.out.println((client.CriaPedido(4, caminho, destino, hostname)).getMensagem());
                         break;
 
                     case 5:
                         System.out.println("Caminho do arquivo que você quer apagar: ");
                         caminho = t.next();
-                        caminho = "5#"+caminho+"#";
-                        System.out.println(TCPClient.iniciaComunicacao(caminho,hostname));
+                        System.out.println((client.CriaPedido(5, caminho, hostname)).getMensagem());
                         break;
 
                     case 6:
