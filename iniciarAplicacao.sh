@@ -1,8 +1,6 @@
 #!/bin/bash
 
- cd ~/Documents/Redes/Natã/TrabalhoRedes/src 
-javac -d ../class protocolo/*.java cliente/*.java servidor/*.java
-
-
- cd ../class/cliente
- java *
+cd src/
+javac -d . protocolo/*.java cliente/*.java servidor/*.java
+nohup java servidor.TCPServer &
+java cliente.InicioCliente
