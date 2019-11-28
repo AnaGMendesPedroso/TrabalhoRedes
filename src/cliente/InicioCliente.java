@@ -9,11 +9,11 @@ public class InicioCliente {
     public static TCPClient client;
     public static void main(String[] args) {
         client = new TCPClient();
-        System.out.println("||\t--------------------------------------------------------\t-||");
-        System.out.println("||\tFaculdade de Computação\t-||||");
-        System.out.println("||\tTrabalho Prático Redes de Computadores\t-||");
-        System.out.println("||\tAcadêmicos: Ana GM Pedroso, Nathan P Bispo\t-||");
-        System.out.println("||---------------------------------------------------------------------||\n");
+        System.out.println("||----------------------------------------------------------||");
+        System.out.println("||\tFaculdade de Computação\t ---------------------------||");
+        System.out.println("||\tTrabalho Prático Redes de Computadores  ------------||");
+        System.out.println("||\tAcadêmicos: Ana GM Pedroso, Nathan P Bispo ---------||");
+        System.out.println("||----------------------------------------------------------||\n");
         menu();
     }
 
@@ -55,25 +55,25 @@ public class InicioCliente {
                         break;
 
                     case 4:
-                        System.out.println("Caminho do arquivo em sua máquina que deseja enviar:");
+                        System.out.println("Caminho do arquivo em sua máquina que deseja enviar: \nExemplo:/home/user/Downloads/arquivoExemplo.pdf");
                         caminho = t.next();
-                        System.out.println("Qual o destino no servido?");
+                        System.out.println("Qual o caminho de destino no servidor?");
                         String destino = t.next();
                         System.out.println((client.CriaPedido(4, caminho, destino, hostname)).getMensagem());
                         break;
 
                     case 5:
-                        System.out.println("Caminho do arquivo que você quer apagar: ");
+                        System.out.println("Caminho do arquivo no servidor que você quer apagar: ");
                         caminho = t.next();
                         System.out.println((client.CriaPedido(5, caminho, hostname)).getMensagem());
                         break;
 
                     case 6:
-                        System.out.println("Trabalho finalizado com sucesso! Volte sempre :)");
+                        System.out.println("Trabalho finalizado com sucesso!");
                         break;
                 }
             }catch(InputMismatchException e) {
-                System.err.println("Ixi cara deu ruim nessa sua entrada ae :( \nTenta de novo que eu deixo :)");
+                System.err.println("Entrada inválida. Tente novamente");
                 System.out.print("Aperte \"Enter\" para continuar.");
                 t.nextLine();
                 t.nextLine().matches("\n");

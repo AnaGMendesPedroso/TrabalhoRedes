@@ -43,7 +43,7 @@ public class GerenciadorDiretorios {
         File file = new File(arquivoServidor.getAbsolutePath() + "/"+nomeNovoDiretorio);
         return ((file).mkdir())
             ? "Diretorio criado no caminho "+file.getAbsolutePath()
-            : "Deu ruim ao tentar criar o diretório "+nomeNovoDiretorio;
+            : "Não foi possível criar o diretório "+nomeNovoDiretorio;
     }
 
     private String removerArquivo(String caminhoArquivo) {
@@ -66,7 +66,7 @@ public class GerenciadorDiretorios {
         }
         return (sistemaDeArquivos.delete())
             ? "Diretório "+sistemaDeArquivos.getAbsolutePath()+" removido!"
-            : "Deu ruim ao tentar remover o diretório";
+            : "Não foi possível remover o diretório";
     }
 
     private String[] listarConteudoDiretorio(String caminho) {
