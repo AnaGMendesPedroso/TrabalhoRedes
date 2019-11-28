@@ -5,6 +5,7 @@ import protocolo.Protocolo;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GerenciadorDiretorios {
     private final File arquivoServidor;
@@ -69,8 +70,21 @@ public class GerenciadorDiretorios {
             : "Não foi possível remover o diretório";
     }
 
-    private String[] listarConteudoDiretorio(String caminho) {
-        return (new File(arquivoServidor.getAbsolutePath() + "/"+caminho)).list();
+    private ArrayList<String>  listarConteudoDiretorio(String caminho) {
+        File diretorio = new File(arquivoServidor.getAbsolutePath() + "/"+caminho);
+        File[] arquivos = diretorio.listFiles();
+        ArrayList<String> listaConteudo = new ArrayList<>();
+        if(arquivos != null && arquivos.length > 0){
+            for (File arquivo: arquivos) {
+                listaConteudo.add(" |--> "+ arquivo.getName());
+                if (arquivo.isDirectory()){
+                    listarConteudoDiretorio(arquivo.getAbsolutePath());
+                }
+            }
+        }else{
+            listaConteudo.add("Diretório vazio");
+        }
+        return listaConteudo;
     }
 
     private String salvarConteudoDiretorio(byte[] Arquivo, String enderecoDestino, String nomeDoArquivo) {

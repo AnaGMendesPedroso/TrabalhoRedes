@@ -1,11 +1,13 @@
 package protocolo;
 
+import java.util.ArrayList;
+
 public class Protocolo implements java.io.Serializable {
     private int operacao;
     private byte[] arquivo;
     private String endereco1;
     private String endereco2;
-    private String[] lista;
+    private ArrayList<String>  lista;
     private String mensagem;
     private String nomeArquivo;
 
@@ -38,11 +40,11 @@ public class Protocolo implements java.io.Serializable {
         this.endereco2 = endereco2;
     }
 
-    public String[] getLista() {
+    public ArrayList<String>  getLista() {
         return lista;
     }
 
-    public void setLista(String[] lista) {
+    public void setLista(ArrayList<String> lista) {
         this.lista = lista;
     }
 
