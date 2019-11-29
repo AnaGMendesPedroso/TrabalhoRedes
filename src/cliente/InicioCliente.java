@@ -49,7 +49,6 @@ public class InicioCliente {
                         System.out.println("Nome do diretório que deseja listar o conteúdo: ") ;
                         caminho = t.next();
                         Protocolo protocolo = client.CriaPedido(3, caminho, hostname);
-                        System.out.println(protocolo.getMensagem());
                         for (String i : protocolo.getLista())
                             System.out.println(i);
                         break;
